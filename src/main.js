@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(['require', window.exampleAppName], function(require, exports, module) {
   // choose your test here
-  require('src/examples/views/Scrollview/example.js');
+  require (window.exampleAppName);
 });

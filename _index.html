@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>famo.us App</title>
+        <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <script>
+          var examples = <%= examples %>;
+          if (location.search.indexOf('example') > -1) {
+            // parse query string
+            var queryString = location.search.slice(1);
+            var queryParts = queryString.split('&');
+            var queryVars = {};
+            queryParts.forEach(function(item) {
+              var queryVarName = item.split('=')[0];
+              var queryVarValue = item.split('=')[1] || '';
+              queryVars[queryVarName] = queryVarValue;
+            });
+            if(queryVars.example) {
+              window.exampleAppName = decodeURIComponent(queryVars.example);
+            }
+          }
+        </script>
+        <link rel="stylesheet" type="text/css" href="src/famous/core/famous.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+        <link rel="stylesheet" type="text/css" href="css/famous_styles.css" />
+        <script type="text/javascript" src="src/lib/functionPrototypeBind.js"></script>
+        <script type="text/javascript" src="src/lib/classList.js"></script>
+        <script type="text/javascript" src="src/lib/requestAnimationFrame.js"></script>
+        <script type="text/javascript" src="src/lib/require.js" data-main="src/main"></script>
+    </head>
+    <body>
+      <script>
+        var hasExample = (queryVars && queryVars.example) || false;
+        if(!hasExample) {
+          document.writeln("<h1>Choose an example:</h1>");
+          document.writeln('<ul>');
+          examples.forEach(function(example) {
+            document.writeln('<li><a href="URL">FILENAME</a></li>'
+            .replace('URL', '/?example=' + encodeURIComponent(example))
+            .replace('FILENAME', example));
+          });
+          document.writeln('</ul>');
+
+          document.getElementsByTagName('html')[0].style.overflow = 'auto'; 
+          document.getElementsByTagName('body')[0].style.overflow = 'auto'; 
+        }
+      </script>
+    </body>
+</html>
